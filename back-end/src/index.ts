@@ -1,13 +1,12 @@
 import dotenv from 'dotenv';
 import express, { Express, Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
-import path from 'path';
-import cors from 'cors';
 import mongoose from 'mongoose';
 import passport from 'passport';
 import { MONGODB_URI, SESSION_SECRET } from './util/secrets';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import { User, UserDocument } from './models/User';
+const cors = require('cors');
 
 import users from './routes/api/users';
 
@@ -47,10 +46,8 @@ passport.use(
   )
 );
 
-app.use((req: Request, res: Response, next: NextFunction) => {
-  cors();
-  next();
-});
+app.options('*', cors());
+app.use(cors());
 
 // define a route handler for the default home page
 app.get('/', (req: Request, res: Response) => {

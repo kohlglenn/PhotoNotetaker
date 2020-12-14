@@ -3,19 +3,54 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = __importDefault(require("express"));
-var path_1 = __importDefault(require("path"));
-var app = express_1.default();
-var port = 8080; // default port to listen
-// Configure Express to use EJS
-app.set("views", path_1.default.join(__dirname, "views"));
-app.set("view engine", "ejs");
+const dotenv_1 = __importDefault(require("dotenv"));
+const express_1 = __importDefault(require("express"));
+const body_parser_1 = __importDefault(require("body-parser"));
+const mongoose_1 = __importDefault(require("mongoose"));
+const passport_1 = __importDefault(require("passport"));
+const secrets_1 = require("./util/secrets");
+const passport_jwt_1 = require("passport-jwt");
+const User_1 = require("./models/User");
+const cors = require('cors');
+const users_1 = __importDefault(require("./routes/api/users"));
+// initialize configuration
+dotenv_1.default.config();
+const port = process.env.PORT;
+// Connect to MongoDB
+mongoose_1.default
+    .connect(secrets_1.MONGODB_URI, { useNewUrlParser: true })
+    .then(() => console.log('MongoDB successfully connected'))
+    .catch((err) => console.log(err));
+const app = express_1.default();
+// Middleware
+app.use(body_parser_1.default.json());
+app.use(body_parser_1.default.urlencoded({ extended: true }));
+app.use(passport_1.default.initialize());
+passport_1.default.use(new passport_jwt_1.Strategy({
+    jwtFromRequest: passport_jwt_1.ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secretOrKey: secrets_1.SESSION_SECRET
+}, (jwt_payload, done) => {
+    User_1.User.findById(jwt_payload.id)
+        .then((user) => {
+        if (user) {
+            return done(null, user);
+        }
+        return done(null, false);
+    })
+        .catch((err) => console.log(err));
+}));
+app.options('*', cors());
+app.use(cors());
 // define a route handler for the default home page
-app.get("/", function (req, res) {
-    // render the index template
-    res.render("index");
+app.get('/', (req, res) => {
+    res.send('<h1> Hello World </h1>');
 });
+app.get('/protected', passport_1.default.authenticate('jwt', { session: false }), (req, res) => {
+    res.send(req.user);
+});
+// routes
+app.use('/api/users', users_1.default);
 // start the express server
-app.listen(port, function () {
-    console.log("server started at http://localhost:" + port);
+app.listen(port, () => {
+    console.log(`server started at http://localhost:${port}`);
 });

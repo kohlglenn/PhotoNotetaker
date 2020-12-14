@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
+  /* eslint-disable react/jsx-filename-extension */
   <React.StrictMode>
     <App />
   </React.StrictMode>,
