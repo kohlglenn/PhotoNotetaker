@@ -11,19 +11,32 @@ import {
 import PropTypes from 'prop-types';
 
 import { logoutUser } from '../../actions/authActions';
+import Header from './Header';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Footer, Sider } = Layout;
 
 const Navbar = (props) => {
   const { children, history } = props;
 
-  const onLogoutClick = (e) => {
+  const onLogoutClick = () => {
     props.logoutUser();
     history.push('/');
   };
 
   const handleMenuClick = ({ item, key, keyPath, domEvent }) => {
-    // TODO: IMPLEMENT ME!
+    switch (key) {
+      case '1':
+        break;
+      case '2':
+        break;
+      case '3':
+        break;
+      case '4':
+        onLogoutClick();
+        break;
+      default:
+      // do nothing
+    }
   };
 
   return (
@@ -57,18 +70,7 @@ const Navbar = (props) => {
         </Menu>
       </Sider>
       <Layout>
-        <Header
-          className="site-layout-sub-header-background"
-          style={{
-            position: 'sticky',
-            zIndex: 1,
-            width: '100%',
-            top: 0,
-            left: 0,
-            height: '10vh',
-            minHeight: 60
-          }}
-        />
+        <Header />
         <Content style={{ margin: '24px 16px 0', height: '100%' }}>
           <div
             className="site-layout-background"

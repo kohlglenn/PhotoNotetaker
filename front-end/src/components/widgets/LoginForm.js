@@ -14,11 +14,11 @@ const LoginForm = (props) => {
 
   const { errors, auth, history } = props;
 
-  useEffect(() => {
-    if (auth.isAuthenticated) {
-      history.replace('/dashboard');
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (auth.isAuthenticated) {
+  //     history.replace('/dashboard');
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (auth.isAuthenticated) {

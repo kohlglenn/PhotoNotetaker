@@ -16,9 +16,10 @@ import PrivateRoute from './components/private-route/PrivateRoute';
 import Landing from './components/screens/Landing';
 import Signup from './components/screens/Signup';
 import Forgot from './components/screens/Forgot';
+import ForgotChangePassword from './components/screens/ForgotChangePassword';
 import Dashboard from './components/screens/Dashboard';
 
-// TODO: Implement Forgot Password Screen, Logout Button on Nav, Nav popout not visible on some screens, update profile screen, profile screen, user feed
+// TODO: Landing page shouldn't redirect to dashboard as it creates a race condition with auth, Nav popout not visible on some screens, update profile screen, profile screen, user feed
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -48,7 +49,12 @@ const App = (props) => {
       <Router>
         <Route location={location} exact path="/" component={Landing} />
         <Route location={location} path="/signup" component={Signup} />
-        <Route location={location} path="/forgot" component={Forgot} />
+        <Route location={location} exact path="/forgot" component={Forgot} />
+        <Route
+          location={location}
+          path="/forgot/:token"
+          component={ForgotChangePassword}
+        />
         <Switch>
           <PrivateRoute
             location={location}

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
 import Navbar from '../layout/Navbar';
-import EmailForm from '../widgets/EmailForm';
+import PasswordTokenForm from '../widgets/PasswordTokenForm';
 
-function Forgot(props) {
+function ForgotChangePassword(props) {
   return (
     <Navbar {...props}>
       <div
@@ -15,10 +15,10 @@ function Forgot(props) {
           justifyContent: 'center'
         }}
       >
-        <EmailForm />
+        <PasswordTokenForm {...props} />
       </div>
     </Navbar>
   );
 }
 
-export default Forgot;
+export default ForgotChangePassword;
