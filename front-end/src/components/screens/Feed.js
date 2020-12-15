@@ -1,11 +1,12 @@
 import React from 'react';
 
 import Navbar from '../layout/Navbar';
+import Feed from '../widgets/Feed';
 
 function Dashboard(props) {
   return (
     <Navbar {...props}>
-      <span>Display some trees!</span>
+      <Feed />
     </Navbar>
   );
 }

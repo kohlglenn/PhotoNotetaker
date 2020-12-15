@@ -17,9 +17,11 @@ import Landing from './components/screens/Landing';
 import Signup from './components/screens/Signup';
 import Forgot from './components/screens/Forgot';
 import ForgotChangePassword from './components/screens/ForgotChangePassword';
+import Feed from './components/screens/Feed';
 import Dashboard from './components/screens/Dashboard';
 
-// TODO: Landing page shouldn't redirect to dashboard as it creates a race condition with auth, Nav popout not visible on some screens, update profile screen, profile screen, user feed
+// TODO: Landing page shouldn't redirect to dashboard as it creates a race condition with auth
+// TODO: update profile screen, profile screen, user feed
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -56,6 +58,7 @@ const App = (props) => {
           component={ForgotChangePassword}
         />
         <Switch>
+          <PrivateRoute location={location} path="/feed" component={Feed} />
           <PrivateRoute
             location={location}
             path="/dashboard"

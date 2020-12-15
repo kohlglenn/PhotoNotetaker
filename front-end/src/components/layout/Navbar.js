@@ -40,7 +40,7 @@ const Navbar = (props) => {
   };
 
   return (
-    <Layout>
+    <Layout style={{ minHeight: '100vh' }}>
       <Sider
         breakpoint="lg"
         collapsedWidth="0"
@@ -56,10 +56,10 @@ const Navbar = (props) => {
         <div className="logo" />
         <Menu theme="dark" mode="inline" onClick={handleMenuClick}>
           <Menu.Item key="1" icon={<UserOutlined />}>
-            <Link to="/dashboard">Dashboard</Link>
+            <Link to="/feed">Feed</Link>
           </Menu.Item>
-          <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-            <Link to="/signup">Signup</Link>
+          <Menu.Item key="2" icon={<UserOutlined />}>
+            <Link to="/dashboard">Dashboard</Link>
           </Menu.Item>
           <Menu.Item key="3" icon={<UploadOutlined />}>
             nav 3

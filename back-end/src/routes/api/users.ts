@@ -2,7 +2,7 @@ import nodemailer from 'nodemailer';
 import jwt from 'jsonwebtoken';
 import express from 'express';
 import { User, UserDocument, MutableUserProperties } from '../../models/User';
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
 import { SESSION_SECRET } from '../../util/secrets';
 import * as crypto from 'crypto';
@@ -166,7 +166,7 @@ router.post(
           subject: 'Reset your password on Starter',
           text: `You are receiving this email because you (or someone else) have requested the reset of the password for your account.\n\n
         Please click on the following link, or paste this into your browser to complete the process:\n\n
-        http://${req.headers.host}/forgot/${user.passwordResetToken}\n\n
+        http://${process.env.FRONT_END_URL}/forgot/${user.passwordResetToken}\n\n
         If you did not request this, please ignore this email and your password will remain unchanged.\n`
         };
         return transporter.sendMail(mailOptions).then(() => {

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
-import Navbar from '../layout/Navbar';
+import LayoutNoNavbar from '../layout/LayoutNoNavbar';
 import EmailForm from '../widgets/EmailForm';
 
 function Forgot(props) {
   return (
-    <Navbar {...props}>
+    <LayoutNoNavbar {...props}>
       <div
         id="container"
         style={{
@@ -17,7 +17,7 @@ function Forgot(props) {
       >
         <EmailForm />
       </div>
-    </Navbar>
+    </LayoutNoNavbar>
   );
 }
 

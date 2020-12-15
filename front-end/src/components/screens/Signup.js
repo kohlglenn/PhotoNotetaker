@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import RegistrationForm from '../widgets/RegisterForm';
-import Navbar from '../layout/Navbar';
+import LayoutNoNavbar from '../layout/LayoutNoNavbar';
 import UserAgreement from '../widgets/UserAgreement';
 
 function Signup(props) {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   return (
-    <Navbar {...props}>
+    <LayoutNoNavbar {...props}>
       <div
         id="container"
         style={{
@@ -22,7 +22,7 @@ function Signup(props) {
           <UserAgreement modalVisible={setIsModalVisible} />
         ) : null}
       </div>
-    </Navbar>
+    </LayoutNoNavbar>
   );
 }
 

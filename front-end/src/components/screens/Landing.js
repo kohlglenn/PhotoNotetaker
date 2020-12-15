@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
-import Navbar from '../layout/Navbar';
+import LayoutNoNavbar from '../layout/LayoutNoNavbar';
 import LoginForm from '../widgets/LoginForm';
 
 function Landing(props) {
   return (
-    <Navbar {...props}>
+    <LayoutNoNavbar {...props}>
       <div
         id="container"
         style={{
@@ -17,7 +17,7 @@ function Landing(props) {
       >
         <LoginForm {...props} />
       </div>
-    </Navbar>
+    </LayoutNoNavbar>
   );
 }
 

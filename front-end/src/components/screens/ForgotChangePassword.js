@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
-import Navbar from '../layout/Navbar';
+import LayoutNoNavbar from '../layout/LayoutNoNavbar';
 import PasswordTokenForm from '../widgets/PasswordTokenForm';
 
 function ForgotChangePassword(props) {
   return (
-    <Navbar {...props}>
+    <LayoutNoNavbar {...props}>
       <div
         id="container"
         style={{
@@ -17,7 +17,7 @@ function ForgotChangePassword(props) {
       >
         <PasswordTokenForm {...props} />
       </div>
-    </Navbar>
+    </LayoutNoNavbar>
   );
 }
 

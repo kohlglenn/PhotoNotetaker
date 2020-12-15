@@ -9,6 +9,7 @@ import { User, UserDocument } from './models/User';
 const cors = require('cors');
 
 import users from './routes/api/users';
+import feed from './routes/api/feed';
 
 // initialize configuration
 dotenv.config();
@@ -64,6 +65,7 @@ app.get(
 
 // routes
 app.use('/api/users', users);
+app.use('/api/feed', feed);
 
 // start the express server
 app.listen(port, () => {

@@ -13,7 +13,6 @@ const CustomHeader = (props) => {
         width: '100%',
         top: 0,
         left: 0,
-        height: '10vh',
         minHeight: 60
       }}
     />

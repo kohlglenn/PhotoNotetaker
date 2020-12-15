@@ -13,6 +13,7 @@ const passport_jwt_1 = require("passport-jwt");
 const User_1 = require("./models/User");
 const cors = require('cors');
 const users_1 = __importDefault(require("./routes/api/users"));
+const feed_1 = __importDefault(require("./routes/api/feed"));
 // initialize configuration
 dotenv_1.default.config();
 const port = process.env.PORT;
@@ -50,6 +51,7 @@ app.get('/protected', passport_1.default.authenticate('jwt', { session: false })
 });
 // routes
 app.use('/api/users', users_1.default);
+app.use('/api/feed', feed_1.default);
 // start the express server
 app.listen(port, () => {
     console.log(`server started at http://localhost:${port}`);
