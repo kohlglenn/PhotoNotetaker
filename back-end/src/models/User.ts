@@ -20,6 +20,9 @@ export class UserDocument {
   @prop({ unique: true })
   email?: string;
 
+  @prop({ unique: true })
+  username?: string;
+
   @prop()
   password?: string;
 

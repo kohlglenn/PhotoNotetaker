@@ -30,14 +30,16 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    User.findOne({ email: req.body.email })
+    User.findOne({
+      $or: [{ email: req.body.email }, { username: req.body.username }]
+    })
       .then((user) => {
         if (user) {
           return res.status(400).json({
             errors: [
               {
                 location: 'body',
-                msg: 'Email already exists',
+                msg: 'Email or username already exists',
                 param: 'email'
               }
             ]
@@ -45,6 +47,7 @@ router.post(
         } else {
           return User.create({
             email: req.body.email,
+            username: req.body.username,
             password: req.body.password,
             passwordResetToken: '',
             passwordResetExpires: Date.now()
@@ -85,14 +88,14 @@ router.post(
           ]
         });
       }
-
       user.comparePassword(password, (err, isMatch) => {
         if (isMatch) {
           // User matched
           // Create JWT Payload
           const payload = {
             id: user.id,
-            name: user.email
+            email: user.email,
+            username: user.username
           };
           // Sign token
           jwt.sign(
@@ -262,7 +265,6 @@ router.patch(
             (user as any)[key] = req.body[key];
           }
         }
-
         return user.save();
       })
       .then((user) => res.json(user))

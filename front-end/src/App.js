@@ -4,7 +4,12 @@ import './index.css';
 
 import React from 'react';
 import axios from 'axios';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import { Provider } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -17,8 +22,9 @@ import Landing from './components/screens/Landing';
 import Signup from './components/screens/Signup';
 import Forgot from './components/screens/Forgot';
 import ForgotChangePassword from './components/screens/ForgotChangePassword';
-import Feed from './components/screens/Feed';
+import FeedScreen from './components/screens/FeedScreen';
 import Dashboard from './components/screens/Dashboard';
+import ItemDetail from './components/screens/ItemDetail';
 
 // TODO: Landing page shouldn't redirect to dashboard as it creates a race condition with auth
 // TODO: update profile screen, profile screen, user feed
@@ -49,8 +55,14 @@ const App = (props) => {
   return (
     <Provider store={store}>
       <Router>
-        <Route location={location} exact path="/" component={Landing} />
-        <Route location={location} path="/signup" component={Signup} />
+        <Route
+          location={location}
+          exact
+          path="/"
+          component={() => <Redirect to="/login" />}
+        />
+        <Route location={location} exact path="/login" component={Landing} />
+        <Route location={location} exct path="/signup" component={Signup} />
         <Route location={location} exact path="/forgot" component={Forgot} />
         <Route
           location={location}
@@ -58,7 +70,16 @@ const App = (props) => {
           component={ForgotChangePassword}
         />
         <Switch>
-          <PrivateRoute location={location} path="/feed" component={Feed} />
+          <PrivateRoute
+            location={location}
+            path="/feed/:username/:latinName"
+            component={ItemDetail}
+          />
+          <PrivateRoute
+            location={location}
+            path="/feed/:username"
+            component={FeedScreen}
+          />
           <PrivateRoute
             location={location}
             path="/dashboard"

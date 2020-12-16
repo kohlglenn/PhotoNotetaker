@@ -1,13 +1,27 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-import Navbar from '../layout/Navbar';
+// This actually is a redirect page.... I want to refactor this out in the future. Scope change
 
 function Dashboard(props) {
-  return (
-    <Navbar {...props}>
-      <span>Display some trees!</span>
-    </Navbar>
+  const { auth } = props;
+  const { isAuthenticated, user } = auth;
+
+  return isAuthenticated ? (
+    <Redirect to={`/feed/${user.username}`} />
+  ) : (
+    <Redirect to="/" />
   );
 }
 
-export default Dashboard;
+Dashboard.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps)(Dashboard);

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import {
   Form,
@@ -13,6 +14,9 @@ import {
   AutoComplete
 } from 'antd';
 import PropTypes from 'prop-types';
+import axios from 'axios';
+
+import { registerUser } from '../../actions/authActions';
 
 const formItemLayout = {
   labelCol: {
@@ -49,8 +53,15 @@ const RegistrationForm = (props) => {
   const { modalVisible } = props;
   const [form] = Form.useForm();
 
+  const { history } = props;
+
   const onFinish = (values) => {
-    console.log('Received values of form: ', values);
+    props.registerUser(values, history);
+    // axios
+    //   .post('api/users/signup', values)
+    //   .then((res) => history.push('/'))
+    //   .catch((err) => console.log(err.toString()));
+    // console.log('Received values of form: ', values);
   };
 
   return (
@@ -72,6 +83,19 @@ const RegistrationForm = (props) => {
           {
             required: true,
             message: 'Please input your E-mail!'
+          }
+        ]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        name="username"
+        label="Username"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your Username!'
           }
         ]}
       >
@@ -147,7 +171,16 @@ const RegistrationForm = (props) => {
 };
 
 RegistrationForm.propTypes = {
-  modalVisible: PropTypes.func.isRequired
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
+  modalVisible: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired
 };
 
-export default RegistrationForm;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(mapStateToProps, { registerUser })(RegistrationForm);

@@ -17,7 +17,7 @@ function Signup(props) {
           justifyContent: 'center'
         }}
       >
-        <RegistrationForm modalVisible={setIsModalVisible} />
+        <RegistrationForm modalVisible={setIsModalVisible} {...props} />
         {isModalVisible ? (
           <UserAgreement modalVisible={setIsModalVisible} />
         ) : null}

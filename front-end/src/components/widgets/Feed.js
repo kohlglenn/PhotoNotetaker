@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { List, message, Avatar, Spin, Card } from 'antd';
 import axios from 'axios';
+import { Link, useParams } from 'react-router-dom';
 
 import WindowScroller from 'react-virtualized/dist/commonjs/WindowScroller';
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
 import VList from 'react-virtualized/dist/commonjs/List';
 import InfiniteLoader from 'react-virtualized/dist/commonjs/InfiniteLoader';
-import Item from 'antd/lib/list/Item';
 
 const VirtualizedExample = (props) => {
   const [data, setData] = useState([]);
@@ -15,8 +15,10 @@ const VirtualizedExample = (props) => {
 
   const loadedRowsMap = {};
 
+  const { username } = useParams();
+
   const fetchData = (callback) => {
-    axios.get('api/feed').then((res) => {
+    axios.get(`api/feed/${username}`).then((res) => {
       if (hasMore) {
         callback(res.data);
         setHasMore(!!res.data.next);
@@ -47,18 +49,19 @@ const VirtualizedExample = (props) => {
   const renderItem = ({ index, key, style }) => {
     const item = data[index];
     return (
-      <List.Item
-        key={key}
-        style={{ ...style, paddingLeft: 4, paddingRight: 4 }}
-      >
-        <List.Item.Meta
-          avatar={<Avatar src={item.thumbnail} />}
-          title={item.title}
-          /* eslint-disable */
-          description={item.description}
-        />
-        <div>Content</div>
-      </List.Item>
+      <Link to={`/feed/${username}/${item.latinName}`}>
+        <List.Item
+          key={key}
+          style={{ ...style, paddingLeft: 4, paddingRight: 4 }}
+        >
+          <List.Item.Meta
+            avatar={<Avatar src={item.photos[0].uri} />}
+            title={item.latinName}
+            /* eslint-disable */
+            description={item.commonName}
+          />
+        </List.Item>
+      </Link>
     );
   };
 

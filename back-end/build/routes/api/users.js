@@ -47,14 +47,16 @@ router.post('/signup', [
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
-    User_1.User.findOne({ email: req.body.email })
+    User_1.User.findOne({
+        $or: [{ email: req.body.email }, { username: req.body.username }]
+    })
         .then((user) => {
         if (user) {
             return res.status(400).json({
                 errors: [
                     {
                         location: 'body',
-                        msg: 'Email already exists',
+                        msg: 'Email or username already exists',
                         param: 'email'
                     }
                 ]
@@ -63,6 +65,7 @@ router.post('/signup', [
         else {
             return User_1.User.create({
                 email: req.body.email,
+                username: req.body.username,
                 password: req.body.password,
                 passwordResetToken: '',
                 passwordResetExpires: Date.now()
@@ -103,7 +106,8 @@ router.post('/login', [express_validator_1.body('email').isEmail(), express_vali
                 // Create JWT Payload
                 const payload = {
                     id: user.id,
-                    name: user.email
+                    email: user.email,
+                    username: user.username
                 };
                 // Sign token
                 jsonwebtoken_1.default.sign(payload, secrets_1.SESSION_SECRET, {

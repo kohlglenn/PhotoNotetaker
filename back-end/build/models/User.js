@@ -27,6 +27,10 @@ __decorate([
     __metadata("design:type", String)
 ], UserDocument.prototype, "email", void 0);
 __decorate([
+    typegoose_1.prop({ unique: true }),
+    __metadata("design:type", String)
+], UserDocument.prototype, "username", void 0);
+__decorate([
     typegoose_1.prop(),
     __metadata("design:type", String)
 ], UserDocument.prototype, "password", void 0);

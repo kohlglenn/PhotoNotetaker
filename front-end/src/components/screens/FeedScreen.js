@@ -3,12 +3,12 @@ import React from 'react';
 import Navbar from '../layout/Navbar';
 import Feed from '../widgets/Feed';
 
-function Dashboard(props) {
+function FeedScreen(props) {
   return (
     <Navbar {...props}>
-      <Feed />
+      <Feed {...props} />
     </Navbar>
   );
 }
 
-export default Dashboard;
+export default FeedScreen;
