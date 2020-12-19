@@ -4,7 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cd back-end && npm start"
+    "ts-node": "ts-node",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"npm run server\" \"npm --prefix front-end run start \"",
+    "server": "concurrently \"tsc -w --skipLibCheck\" \"nodemon build/index.js\"",
+    "build": "rimraf ./build && tsc --skipLibCheck",
+    "start": "npm run build && node build/index.js",
+    "lint": "eslint . --ext .ts",
+    "lint-and-fix": "eslint . --ext .ts --fix"
   },
   "repository": {
     "type": "git",
