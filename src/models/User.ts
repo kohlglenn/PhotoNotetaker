@@ -1,5 +1,5 @@
 import { getModelForClass, prop, pre } from '@typegoose/typegoose';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import mongoose from 'mongoose';
 
 @pre<UserDocument>('save', function () {
@@ -8,7 +8,7 @@ import mongoose from 'mongoose';
     return bcrypt
       .genSalt(10)
       .then((salt) => {
-        return bcrypt.hash(user.password, salt);
+        return bcrypt.hash(user.password as string, salt);
       })
       .then((hash) => {
         user.password = hash;
