@@ -6,17 +6,27 @@ const initialState = {};
 
 const middleware = [thunk];
 
-const store = createStore(
-  rootReducer,
-  initialState,
-  compose(
-    applyMiddleware(...middleware),
-    /* eslint-disable no-underscore-dangle */
-    process.env.NODE_ENV === 'development'
-      ? window.__REDUX_DEVTOOLS_EXTENSION__ &&
-          window.__REDUX_DEVTOOLS_EXTENSION__()
-      : null // if things aren't working, this is a likely suspect!
-  )
-);
+let tempStore;
+
+if (process.env.NODE_ENV === 'development') {
+  tempStore = createStore(
+    rootReducer,
+    initialState,
+    compose(
+      applyMiddleware(...middleware),
+      /* eslint-disable no-underscore-dangle */
+      window.__REDUX_DEVTOOLS_EXTENSION__ &&
+        window.__REDUX_DEVTOOLS_EXTENSION__()
+    )
+  );
+} else {
+  tempStore = createStore(
+    rootReducer,
+    initialState,
+    compose(applyMiddleware(...middleware))
+  );
+}
+
+const store = tempStore;
 
 export default store;
