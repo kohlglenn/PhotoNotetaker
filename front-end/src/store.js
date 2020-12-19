@@ -8,6 +8,7 @@ const middleware = [thunk];
 
 let tempStore;
 
+console.log('ENV');
 console.log(process.env.NODE_ENV);
 
 if (process.env.NODE_ENV === 'development') {
