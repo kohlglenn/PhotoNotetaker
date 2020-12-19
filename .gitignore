@@ -106,5 +106,5 @@ dist
 # Built Typescript js files
 # build/
 
-# Built reac files
+# Built react files
 front-end/build
