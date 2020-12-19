@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Spin, Card, Carousel, List } from 'antd';
+import { Spin, Card, Carousel, List, Typography } from 'antd';
 import PropTypes from 'prop-types';
 
 import Navbar from '../layout/Navbar';
@@ -10,10 +10,44 @@ const { Item } = List;
 
 function ItemDetailCard(props) {
   const { data } = props;
+  const styles = {
+    base: {
+      fontFamily: 'Arial'
+    },
+    commonName: {
+      fontFamily: 'Arial Black'
+    },
+    latinName: {
+      fontStyle: 'italic'
+    },
+    normalText: {
+      fontStyle: 'normal'
+    },
+    familyName: {
+      fontVariant: 'small-caps'
+    },
+    keyIdFeatures: {
+      fontFamily: 'Arial Black'
+    },
+    characteristics: {
+      fontFamily: 'Arial Black'
+    },
+    bioticDisturbances: {
+      fontFamily: 'Arial Black'
+    },
+    notes: {
+      fontFamily: 'Arial Black'
+    },
+    noBullets: {
+      listStyleType: 'none',
+      margin: 0,
+      padding: 0
+    }
+  };
 
   const renderCarousel = (photos) => {
     return (
-      <Carousel autoplay>
+      <Carousel autoplay dotPosition="top">
         {photos.map((p) => (
           <img alt={`${data.latinName}`} src={p.uri} />
         ))}
@@ -21,33 +55,102 @@ function ItemDetailCard(props) {
     );
   };
 
-  const list = [];
-  Object.entries(data).forEach(([k, v]) => {
-    switch (k) {
-      case 'photos':
-      case 'commonName':
-      case 'latinName':
-        break;
-      case 'characteristics':
-      case 'bioticDisturbances':
-        list.push(<Item>{`${k}:`}</Item>);
-        Object.entries(data[k]).forEach(([k2, v2]) => {
-          list.push(<Item>{`${k2}: ${v2}`}</Item>);
-        });
-        break;
-      default:
-        list.push(<Item>{`${k}: ${v}`}</Item>);
-    }
-  });
-
   return (
     <Card
       hoverable
-      style={{ width: '100%', maxWidth: 500 }}
+      style={{ width: '100%', maxWidth: 800 }}
       cover={renderCarousel(data.photos)}
     >
-      <Card.Meta title={data.commonName} description={data.latinName} />
-      <List>{list}</List>
+      <List>
+        <Item>
+          <span style={{ ...styles.base, ...styles.latinName }}>
+            {data.latinName}
+          </span>
+        </Item>
+        <Item>
+          <span style={{ ...styles.base, ...styles.commonName }}>
+            {data.commonName}
+          </span>
+        </Item>
+        <Item>
+          <span style={{ ...styles.base, ...styles.familyName }}>
+            {data.familyName}
+          </span>
+        </Item>
+        <Item>
+          <span style={{ ...styles.base, ...styles.keyIdFeatures }}>
+            Key ID Features
+          </span>
+        </Item>
+        <Item>
+          <ul style={styles.noBullets}>
+            {data.keyIdFeatures.map((f) => {
+              return (
+                <li
+                  key={`keyID${f}`}
+                  style={{ ...styles.base, ...styles.normalText }}
+                >
+                  {f}
+                </li>
+              );
+            })}
+          </ul>
+        </Item>
+        <Item>
+          <span style={{ ...styles.base, ...styles.characteristics }}>
+            Characteristics
+          </span>
+        </Item>
+        <Item>
+          <ul style={styles.noBullets}>
+            {Object.entries(data.characteristics).map(([cKey, cVal]) => {
+              let result = cKey.replace(/([A-Z])/g, ' $1');
+              result = result.charAt(0).toUpperCase() + result.slice(1);
+              return (
+                <li
+                  key={`characteristic${cKey}`}
+                  style={{ ...styles.base, ...styles.normalText }}
+                >
+                  {`${result}: ${cVal}`}
+                </li>
+              );
+            })}
+          </ul>
+        </Item>
+        <Item>
+          <span style={{ ...styles.base, ...styles.bioticDisturbances }}>
+            Biotic Disturbances
+          </span>
+        </Item>
+        {data.bioticDisturbances ? (
+          <Item>
+            <ul style={styles.noBullets}>
+              {Object.entries(data.bioticDisturbances).map(([cKey, cVal]) => {
+                let result = cKey.replace(/([A-Z])/g, ' $1');
+                result = result.charAt(0).toUpperCase() + result.slice(1);
+                return (
+                  <li
+                    key={`biotic${cKey}`}
+                    style={{ ...styles.base, ...styles.normalText }}
+                  >
+                    {`${result}: ${cVal}`}
+                  </li>
+                );
+              })}
+            </ul>
+          </Item>
+        ) : null}
+        <Item>
+          <span style={{ ...styles.base, ...styles.notes }}>Notes</span>
+        </Item>
+        {data.notes ? (
+          <Item>
+            <span style={{ ...styles.base, ...styles.normalText }}>
+              {data.notes}
+            </span>
+          </Item>
+        ) : null}
+      </List>
     </Card>
   );
 }
@@ -64,7 +167,6 @@ function ItemDetail(props) {
 
   const fetchData = () => {
     axios.get(`api/feed/${username}/${latinName}`).then((res) => {
-      console.log(res.data.results);
       setData(res.data.results);
       setLoading(false);
     });

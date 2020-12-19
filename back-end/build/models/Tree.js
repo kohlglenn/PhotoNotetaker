@@ -104,7 +104,7 @@ __decorate([
     __metadata("design:type", String)
 ], TreeDocument.prototype, "commonName", void 0);
 __decorate([
-    typegoose_1.prop({ required: true }),
+    typegoose_1.prop({ required: true, type: String }),
     __metadata("design:type", Array)
 ], TreeDocument.prototype, "keyIdFeatures", void 0);
 __decorate([
@@ -116,7 +116,7 @@ __decorate([
     __metadata("design:type", Array)
 ], TreeDocument.prototype, "photos", void 0);
 __decorate([
-    typegoose_1.prop({ ref: () => Characteristics }),
+    typegoose_1.prop({ ref: () => BioticDisturbances }),
     __metadata("design:type", Object)
 ], TreeDocument.prototype, "bioticDisturbances", void 0);
 __decorate([

@@ -27,13 +27,11 @@ class FeedData {
   private static getImage(): Image {
     const thumbnails = [
       'https://ichef.bbci.co.uk/images/ic/960x960/p08634k6.jpg',
-      'https://www.thespruce.com/thmb/mh5-9gjw1Tzp5X7MHCin7znCunU=/1414x1414/smart/filters:no_upscale()/GettyImages-200443720-0011-59a2f08fd088c000111be4f4.jpg',
-      'https://static.wikia.nocookie.net/animalcrossing/images/c/c7/NH-Tree.png/revision/latest/top-crop/width/220/height/220?cb=20200415131758',
-      'https://www.thebalancesmb.com/thmb/xjqT9R5rB_cU86QGT5ImpH-c9lk=/300x200/filters:no_upscale():max_bytes(150000):strip_icc():saturation(0.2):brightness(10):contrast(5):format(webp)/ResponsibleOverhangingTreeBranches-Tomekbudujedomek-Moment-GettyImages-5b0d6fa043a1030036e66122.jpg'
+      'https://www.thespruce.com/thmb/mh5-9gjw1Tzp5X7MHCin7znCunU=/1414x1414/smart/filters:no_upscale()/GettyImages-200443720-0011-59a2f08fd088c000111be4f4.jpg'
     ];
 
     let retVal: Image = new Image();
-    retVal.uri = thumbnails[this.r(4)];
+    retVal.uri = thumbnails[this.r(2)];
     return retVal;
   }
 
@@ -87,9 +85,9 @@ class FeedData {
       _id: string;
     } = Object.assign(new TreeDocument(), { _id: `${this._id++}` });
 
-    retVal.latinName = `latinName${this._id}`;
-    retVal.familyName = 'familyName';
-    retVal.commonName = 'commonName';
+    retVal.latinName = `Latin Name${this._id}`;
+    retVal.familyName = 'Family Name';
+    retVal.commonName = 'Common Name';
     retVal.keyIdFeatures = ['super awesome', 'such wow!', 'much leaves'];
     retVal.characteristics = this.getCharacteristics();
     retVal.photos = [1, 2, 3, 4, 5].map((v) => this.getImage());
@@ -146,7 +144,9 @@ router.get(
   '/:username/:latinName',
   passport.authenticate('jwt', { session: false }),
   (req: Request, res: Response) => {
-    const { latinName } = req.params;
+    let { latinName } = req.params;
+    latinName = decodeURI(latinName);
+
     User.findOne({ email: (req.user as UserDocument).email })
       .then((user) => {
         if (!user) {

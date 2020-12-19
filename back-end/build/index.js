@@ -14,6 +14,7 @@ const User_1 = require("./models/User");
 const cors = require('cors');
 const users_1 = __importDefault(require("./routes/api/users"));
 const feed_1 = __importDefault(require("./routes/api/feed"));
+const create_1 = __importDefault(require("./routes/api/create"));
 // initialize configuration
 dotenv_1.default.config();
 const port = process.env.PORT;
@@ -23,9 +24,13 @@ mongoose_1.default
     .then(() => console.log('MongoDB successfully connected'))
     .catch((err) => console.log(err));
 const app = express_1.default();
+// app.use((req: Request, res: Response, next: NextFunction) => {
+//   console.log(req.headers);
+//   next();
+// });
 // Middleware
-app.use(body_parser_1.default.json());
-app.use(body_parser_1.default.urlencoded({ extended: true }));
+app.use(body_parser_1.default.json({ limit: '50mb' }));
+app.use(body_parser_1.default.urlencoded({ limit: '50mb' }));
 app.use(passport_1.default.initialize());
 passport_1.default.use(new passport_jwt_1.Strategy({
     jwtFromRequest: passport_jwt_1.ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -52,6 +57,7 @@ app.get('/protected', passport_1.default.authenticate('jwt', { session: false })
 // routes
 app.use('/api/users', users_1.default);
 app.use('/api/feed', feed_1.default);
+app.use('/api/create', create_1.default);
 // start the express server
 app.listen(port, () => {
     console.log(`server started at http://localhost:${port}`);

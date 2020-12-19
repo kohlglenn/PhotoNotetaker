@@ -11,7 +11,7 @@ const authReducer = (state = initialState, action) => {
     case SET_CURRENT_USER:
       return {
         ...state,
-        isAuthenticated: !!action.payload,
+        isAuthenticated: Object.keys(action.payload).length !== 0,
         user: action.payload,
         loading: false
       };

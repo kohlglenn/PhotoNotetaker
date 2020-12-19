@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Layout, Menu, Button } from 'antd';
@@ -16,22 +16,28 @@ import Header from './Header';
 const { Content, Footer, Sider } = Layout;
 
 const Navbar = (props) => {
-  const { children, history } = props;
+  const { children, history, auth } = props;
 
   const onLogoutClick = () => {
     props.logoutUser();
-    history.push('/');
   };
+
+  useEffect(() => {
+    console.log(auth);
+    if (!auth.isAuthenticated) {
+      history.push('/');
+    }
+  }, [auth]);
 
   const handleMenuClick = ({ item, key, keyPath, domEvent }) => {
     switch (key) {
       case '1':
+        history.push(`/feed/${auth.user.username}`);
         break;
       case '2':
+        history.push(`/create`);
         break;
       case '3':
-        break;
-      case '4':
         onLogoutClick();
         break;
       default:
@@ -41,46 +47,41 @@ const Navbar = (props) => {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Sider
-        breakpoint="lg"
-        collapsedWidth="0"
+      <Header />
+      <Content style={{ margin: '24px 16px 0', height: '100%' }}>
+        <div
+          className="site-layout-background"
+          style={{ padding: 0, minHeight: 360, backgroundColor: 'white' }}
+        >
+          {children}
+        </div>
+        <div style={{ height: '8vh', minHeight: 50 }} />
+      </Content>
+
+      <Footer
         style={{
-          overflow: 'visible',
-          height: '100vh',
-          position: 'sticky',
+          position: 'fixed',
+          zIndex: 1,
+          width: '100vw',
+          bottom: 0,
           left: 0,
-          top: 0,
-          zIndex: 10
+          height: '8vh',
+          minHeight: 50,
+          backgroundColor: '#fff',
+          padding: 0
         }}
       >
-        <div className="logo" />
-        <Menu theme="dark" mode="inline" onClick={handleMenuClick}>
-          <Menu.Item key="1" icon={<UserOutlined />}>
-            <Link to="/feed">Feed</Link>
-          </Menu.Item>
-          <Menu.Item key="2" icon={<UserOutlined />}>
-            <Link to="/dashboard">Dashboard</Link>
-          </Menu.Item>
-          <Menu.Item key="3" icon={<UploadOutlined />}>
-            nav 3
-          </Menu.Item>
-          <Menu.Item key="4" icon={<UserOutlined />}>
-            Logout
-          </Menu.Item>
+        <Menu
+          theme="dark"
+          mode="horizontal"
+          style={{ width: '100%', height: '100%', textAlign: 'center' }}
+          onClick={handleMenuClick}
+        >
+          <Menu.Item key="1">Feed</Menu.Item>
+          <Menu.Item key="2">Add Tree</Menu.Item>
+          <Menu.Item key="3">Logout</Menu.Item>
         </Menu>
-      </Sider>
-      <Layout>
-        <Header />
-        <Content style={{ margin: '24px 16px 0', height: '100%' }}>
-          <div
-            className="site-layout-background"
-            style={{ padding: 0, minHeight: 360, backgroundColor: 'white' }}
-          >
-            {children}
-          </div>
-        </Content>
-        <Footer style={{ textAlign: 'center' }}>Kohl Peterson ©2020</Footer>
-      </Layout>
+      </Footer>
     </Layout>
   );
 };
@@ -88,7 +89,8 @@ const Navbar = (props) => {
 Navbar.propTypes = {
   children: PropTypes.node.isRequired,
   logoutUser: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({

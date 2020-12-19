@@ -25,9 +25,7 @@ import ForgotChangePassword from './components/screens/ForgotChangePassword';
 import FeedScreen from './components/screens/FeedScreen';
 import Dashboard from './components/screens/Dashboard';
 import ItemDetail from './components/screens/ItemDetail';
-
-// TODO: Landing page shouldn't redirect to dashboard as it creates a race condition with auth
-// TODO: update profile screen, profile screen, user feed
+import CreateItemScreen from './components/screens/CreateItemScreen';
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -79,6 +77,11 @@ const App = (props) => {
             location={location}
             path="/feed/:username"
             component={FeedScreen}
+          />
+          <PrivateRoute
+            location={location}
+            path="/create/"
+            component={CreateItemScreen}
           />
           <PrivateRoute
             location={location}

@@ -20,7 +20,7 @@
         "eslint-plugin-prettier"
     ],
     "rules": {
-        "prettier/prettier": "warn",
+        "prettier/prettier": "off",
         "dot-notation": "warn",
         "no-underscore-dangle": "warn",
         "no-unused-vars": "warn",
@@ -28,6 +28,7 @@
         "react/jsx-props-no-spreading": "off",
         "react/jsx-filename-extension": "off",
         "react/jsx-curly-newline": "off",
-        "react/forbid-prop-types": "off"
+        "react/forbid-prop-types": "off",
+        "react/jsx-wrap-multilines": "off"
     }
 }

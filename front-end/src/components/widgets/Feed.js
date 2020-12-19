@@ -56,8 +56,11 @@ const VirtualizedExample = (props) => {
         >
           <List.Item.Meta
             avatar={<Avatar src={item.photos[0].uri} />}
-            title={item.latinName}
-            /* eslint-disable */
+            title={
+              <span style={{ fontStyle: 'italic', fontFamily: 'Arial' }}>
+                {item.latinName}
+              </span>
+            }
             description={item.commonName}
           />
         </List.Item>

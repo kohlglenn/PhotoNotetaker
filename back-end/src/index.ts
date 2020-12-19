@@ -10,6 +10,7 @@ const cors = require('cors');
 
 import users from './routes/api/users';
 import feed from './routes/api/feed';
+import create from './routes/api/create';
 
 // initialize configuration
 dotenv.config();
@@ -23,9 +24,13 @@ mongoose
 
 const app: Express = express();
 
+// app.use((req: Request, res: Response, next: NextFunction) => {
+//   console.log(req.headers);
+//   next();
+// });
 // Middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb' }));
 
 app.use(passport.initialize());
 passport.use(
@@ -66,6 +71,7 @@ app.get(
 // routes
 app.use('/api/users', users);
 app.use('/api/feed', feed);
+app.use('/api/create', create);
 
 // start the express server
 app.listen(port, () => {

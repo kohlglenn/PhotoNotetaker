@@ -67,7 +67,7 @@ export class TreeDocument {
   @prop({ required: true })
   commonName!: string;
 
-  @prop({ required: true })
+  @prop({ required: true, type: String })
   keyIdFeatures!: Array<string>;
 
   @prop({ required: true, ref: () => Characteristics })
@@ -76,7 +76,7 @@ export class TreeDocument {
   @prop({ ref: () => Image })
   photos?: Ref<Image>[];
 
-  @prop({ ref: () => Characteristics })
+  @prop({ ref: () => BioticDisturbances })
   bioticDisturbances?: Ref<BioticDisturbances>;
 
   @prop()
