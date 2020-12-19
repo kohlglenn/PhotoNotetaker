@@ -104,4 +104,4 @@ dist
 .tern-port
 
 # Built Typescript js files
-build/
+# build/

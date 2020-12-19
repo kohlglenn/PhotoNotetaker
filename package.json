@@ -8,8 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"npm run server\" \"npm --prefix front-end run start \"",
     "server": "concurrently \"tsc -w --skipLibCheck\" \"nodemon build/index.js\"",
-    "clean:build": "rimraf ./build",
-    "start": "tsc --skipLibCheck && node build/index.js",
+    "build": "rimraf ./build && tsc --skipLibCheck",
+    "start": "node build/index.js",
     "lint": "eslint . --ext .ts",
     "lint-and-fix": "eslint . --ext .ts --fix"
   },
@@ -38,8 +38,7 @@
     "multer": "^1.4.2",
     "nodemailer": "^6.4.17",
     "passport": "^0.4.1",
-    "passport-jwt": "^4.0.0",
-    "typescript": "^4.1.3"
+    "passport-jwt": "^4.0.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
@@ -64,6 +63,7 @@
     "rimraf": "^3.0.2",
     "ts-node": "^9.1.1",
     "ts-node-dev": "^1.1.1",
-    "tslint": "^6.1.3"
+    "tslint": "^6.1.3",
+    "typescript": "^4.1.3"
   }
 }
