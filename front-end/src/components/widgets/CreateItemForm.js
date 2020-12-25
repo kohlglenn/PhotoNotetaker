@@ -243,6 +243,25 @@ const ArrayEntryOneColumn = (props) => {
   );
 };
 
+const CHARACTERISTICS = {
+  Type: 'type',
+  'Mature Height': 'matureHeight',
+  'Mature Spread': 'matureSpread',
+  Form: 'form',
+  'Leaf Arrangement': 'leafArrangement',
+  'Bud Arrangement': 'budArrangement',
+  'Flowers, Fruits & Cones': 'flowersFruitCones',
+  'Soil & Sun Requirements': 'soilSunRequirements',
+  Use: 'use',
+  Limitations: 'limitations'
+};
+
+const BIOTIC_DISTURBANCES = {
+  Signs: 'signs',
+  Symptoms: 'symptoms',
+  'Management Strategy': 'managementStrategy'
+};
+
 const RegistrationForm = (props) => {
   const { modalVisible } = props;
   const [form] = Form.useForm();
@@ -258,14 +277,16 @@ const RegistrationForm = (props) => {
   }, []);
 
   const onFinish = (values) => {
+    console.log(values);
     let tempCharacteristics = {};
     values.characteristics.forEach((c) => {
-      tempCharacteristics[c.key] = c.value;
+      console.log(c.key);
+      tempCharacteristics[CHARACTERISTICS[c.key]] = c.value;
     });
     values.characteristics = tempCharacteristics;
     let tempBioticDisturbances = {};
     values.bioticDisturbances.forEach((b) => {
-      tempBioticDisturbances[b.key] = b.value;
+      tempBioticDisturbances[BIOTIC_DISTURBANCES[b.key]] = b.value;
     });
     values.bioticDisturbances = tempBioticDisturbances;
     let formData = new FormData();
@@ -329,7 +350,7 @@ const RegistrationForm = (props) => {
 
       <Form.Item label="Characteristics">
         <ArrayEntryTwoColumn
-          keys={['k1', 'k2']}
+          keys={Object.keys(CHARACTERISTICS)}
           name={'characteristics'}
           label1={'Characteristic'}
           label2={'Value'}
@@ -338,7 +359,7 @@ const RegistrationForm = (props) => {
 
       <Form.Item label="Biotic Disturbances">
         <ArrayEntryTwoColumn
-          keys={['k3', 'k4']}
+          keys={Object.keys(BIOTIC_DISTURBANCES)}
           name={'bioticDisturbances'}
           label1={'Biotic Disturbance'}
           label2={'Value'}

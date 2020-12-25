@@ -49,7 +49,7 @@ const VirtualizedExample = (props) => {
   const renderItem = ({ index, key, style }) => {
     const item = data[index];
     return (
-      <Link to={`/feed/${username}/${item.latinName}`}>
+      <Link to={`/feed/${username}/${item.latinName}`} key={key}>
         <List.Item
           key={key}
           style={{ ...style, paddingLeft: 4, paddingRight: 4 }}

@@ -4,11 +4,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const passport_1 = __importDefault(require("passport"));
 const multer_1 = __importDefault(require("multer"));
 const path_1 = __importDefault(require("path"));
+const fs_extra_1 = __importDefault(require("fs-extra"));
 const storage = multer_1.default.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, './uploads/');
+        cb(null, './uploads/tmp/');
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + path_1.default.extname(file.originalname)); // Unique file name
@@ -31,9 +33,17 @@ const router = express_1.default.Router();
  * @desc Upload a tree
  * @access Private
  * */
-router.post('/', upload.array('images'), 
-//   passport.authenticate('jwt', { session: false }),
-(req, res) => {
-    res.status(200).send(Object.assign(Object.assign({}, req.body), { files: req.files }));
+router.post('/', passport_1.default.authenticate('jwt', { session: false }), upload.array('images'), (req, res) => {
+    let promises = [];
+    req.files.forEach((f) => {
+        promises.push(fs_extra_1.default.move('./uploads/tmp/' + f.filename, `./uploads/${req.user.username}/` + f.filename));
+    });
+    Promise.all(promises)
+        .then((result) => {
+        res.status(200).send(Object.assign(Object.assign({}, req.body), { files: req.files }));
+    })
+        .catch((err) => {
+        res.status(400).end();
+    });
 });
 exports.default = router;

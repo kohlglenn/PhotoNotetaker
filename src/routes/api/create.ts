@@ -16,10 +16,11 @@ import {
 } from '../../models/Tree';
 import multer from 'multer';
 import path from 'path';
+import fs from 'fs-extra';
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './uploads/');
+    cb(null, './uploads/tmp/');
   },
 
   filename: function (req: any, file: any, cb: any) {
@@ -49,10 +50,25 @@ const router = express.Router();
  * */
 router.post(
   '/',
+  passport.authenticate('jwt', { session: false }),
   upload.array('images'),
-  //   passport.authenticate('jwt', { session: false }),
   (req: Request, res: Response) => {
-    res.status(200).send({ ...req.body, files: req.files });
+    let promises: Promise<void>[] = [];
+    req.files.forEach((f) => {
+      promises.push(
+        fs.move(
+          './uploads/tmp/' + f.filename,
+          `./uploads/${req.user.username}/` + f.filename
+        )
+      );
+    });
+    Promise.all(promises)
+      .then((result) => {
+        res.status(200).send({ ...req.body, files: req.files });
+      })
+      .catch((err) => {
+        res.status(400).end();
+      });
   }
 );
 
