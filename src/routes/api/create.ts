@@ -20,7 +20,7 @@ import fs from 'fs-extra';
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './uploads/tmp/');
+    cb(null, `${process.env.UPLOAD_BASE_DIR}/uploads/tmp/`);
   },
 
   filename: function (req: any, file: any, cb: any) {
@@ -57,8 +57,8 @@ router.post(
     req.files.forEach((f) => {
       promises.push(
         fs.move(
-          './uploads/tmp/' + f.filename,
-          `./uploads/${req.user.username}/` + f.filename
+          `${process.env.UPLOAD_BASE_DIR}/uploads/tmp/${f.filename}`,
+          `${process.env.UPLOAD_BASE_DIR}/uploads/${req.user.username}/${f.filename}`
         )
       );
     });
