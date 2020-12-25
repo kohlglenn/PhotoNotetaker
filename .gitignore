@@ -112,4 +112,4 @@ front-end/build
 # Uploaded files
 uploads/*
 !uploads/tmp/
-# uploads/tmp/*
+uploads/tmp/*
