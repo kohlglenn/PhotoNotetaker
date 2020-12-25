@@ -34,8 +34,10 @@ const router = express_1.default.Router();
  * @access Private
  * */
 router.post('/', passport_1.default.authenticate('jwt', { session: false }), upload.array('images'), (req, res) => {
+    console.log(`${process.env.UPLOAD_BASE_DIR}/uploads/tmp/`);
     let promises = [];
     req.files.forEach((f) => {
+        console.log(f.filename);
         promises.push(fs_extra_1.default.move(`${process.env.UPLOAD_BASE_DIR}/uploads/tmp/${f.filename}`, `${process.env.UPLOAD_BASE_DIR}/uploads/${req.user.username}/${f.filename}`));
     });
     Promise.all(promises)

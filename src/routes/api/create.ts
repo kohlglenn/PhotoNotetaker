@@ -53,12 +53,16 @@ router.post(
   passport.authenticate('jwt', { session: false }),
   upload.array('images'),
   (req: Request, res: Response) => {
+    console.log(`${process.env.UPLOAD_BASE_DIR}/uploads/tmp/`);
     let promises: Promise<void>[] = [];
-    req.files.forEach((f) => {
+    (req.files as any[]).forEach((f) => {
+      console.log(f.filename);
       promises.push(
         fs.move(
           `${process.env.UPLOAD_BASE_DIR}/uploads/tmp/${f.filename}`,
-          `${process.env.UPLOAD_BASE_DIR}/uploads/${req.user.username}/${f.filename}`
+          `${process.env.UPLOAD_BASE_DIR}/uploads/${
+            (req.user as UserDocument).username
+          }/${f.filename}`
         )
       );
     });
