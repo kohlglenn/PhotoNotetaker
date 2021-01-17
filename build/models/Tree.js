@@ -111,7 +111,12 @@ exports.BioticDisturbances = BioticDisturbances;
 class TreeDocument {
 }
 __decorate([
-    typegoose_1.prop({ unique: true, required: true }),
+    typegoose_1.prop({ ref: 'User', required: true }) // User id
+    ,
+    __metadata("design:type", String)
+], TreeDocument.prototype, "user", void 0);
+__decorate([
+    typegoose_1.prop({ required: true }),
     __metadata("design:type", String)
 ], TreeDocument.prototype, "latinName", void 0);
 __decorate([

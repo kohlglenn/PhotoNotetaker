@@ -11,6 +11,7 @@ const cors = require('cors');
 import users from './routes/api/users';
 import feed from './routes/api/feed';
 import create from './routes/api/create';
+import path from 'path';
 
 // initialize configuration
 dotenv.config();
@@ -59,6 +60,9 @@ app.use(cors());
 app.get('/', (req: Request, res: Response) => {
   res.send('<h1> Hello World </h1>');
 });
+
+// TODO: Security -- need these to be private
+app.use('/uploads', express.static(path.join(__dirname + 'uploads')));
 
 app.get(
   '/protected',

@@ -85,7 +85,10 @@ export class BioticDisturbances {
 
 // Not sure if I like characteristics and biotic disturbances modeled in this way... They are weak entities so should be absorbed by the parent I think?
 export class TreeDocument {
-  @prop({ unique: true, required: true })
+  @prop({ ref: 'User', required: true }) // User id
+  user!: string;
+
+  @prop({ required: true })
   latinName!: string;
 
   @prop({ required: true })

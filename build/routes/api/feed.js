@@ -78,7 +78,7 @@ FeedData.r = (max) => {
     return Math.floor(Math.random() * Math.floor(max));
 };
 /**
- * @route GET api/feed
+ * @route GET api/feed/username
  * @desc Updates a users information
  * @access Private
  * */
@@ -88,14 +88,19 @@ router.get('/:username', passport_1.default.authenticate('jwt', { session: false
         if (!user) {
             throw Error('User not found');
         }
+        return Tree_1.Tree.find({ user: user.id });
     })
-        .then((user) => {
-        let dummyData = [];
-        for (let i = 0; i < 10; i++) {
-            dummyData.push(FeedData.getFeedData());
-        }
-        const next = `${req.headers.host}/feed?page=2`;
-        res.json({ user: user, results: dummyData, next: next });
+        .then((trees) => {
+        // let dummyData: Array<FeedData> = [];
+        // for (let i = 0; i < 10; i++) {
+        //   dummyData.push(FeedData.getFeedData());
+        // }
+        // const next = `http://${req.headers.host}/api/feed/${
+        //   req.params.username
+        // }?page=${req.query.page ? parseInt(req.query.page as string) + 1 : 2}`;
+        // res.json({ user: user, results: dummyData, next: next });
+        const next = `http://${req.headers.host}/api/feed/${req.params.username}?page=${req.query.page ? parseInt(req.query.page) + 1 : 2}`;
+        res.json({ results: trees, next: next });
     })
         .catch((err) => {
         res.status(400).json({
@@ -110,7 +115,7 @@ router.get('/:username', passport_1.default.authenticate('jwt', { session: false
     });
 });
 /**
- * @route GET api/feed/:latinName
+ * @route GET api/feed/:username/:latinName
  * @desc Updates a users information
  * @access Private
  * */

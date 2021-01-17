@@ -10,6 +10,7 @@ import InfiniteLoader from 'react-virtualized/dist/commonjs/InfiniteLoader';
 
 const VirtualizedExample = (props) => {
   const [data, setData] = useState([]);
+  const [next, setNext] = useState('');
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
@@ -18,9 +19,11 @@ const VirtualizedExample = (props) => {
   const { username } = useParams();
 
   const fetchData = (callback) => {
-    axios.get(`api/feed/${username}`).then((res) => {
+    axios.get(next || `api/feed/${username}`).then((res) => {
       if (hasMore) {
         callback(res.data);
+        console.log(res.data.next);
+        setNext(res.data.next ? res.data.next : '');
         setHasMore(!!res.data.next);
       }
     });

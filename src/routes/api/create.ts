@@ -81,6 +81,7 @@ router.post(
     const body: TreeDocument = JSON.parse(req.body.data);
     // console.log(body);
     body.photos = photos;
+    body.user = (req.user as { _id: string })._id;
     // If there are issues then this is the likely suspect. The data is sent as form-data --> I may need to convert it to blobs and send as application/json formats but
     // I don't know if I want to commit to that just yet
     // body.characteristics = JSON.parse(body.characteristics as string);

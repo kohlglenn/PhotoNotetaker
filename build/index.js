@@ -15,6 +15,7 @@ const cors = require('cors');
 const users_1 = __importDefault(require("./routes/api/users"));
 const feed_1 = __importDefault(require("./routes/api/feed"));
 const create_1 = __importDefault(require("./routes/api/create"));
+const path_1 = __importDefault(require("path"));
 // initialize configuration
 dotenv_1.default.config();
 const port = process.env.PORT;
@@ -51,6 +52,8 @@ app.use(cors());
 app.get('/', (req, res) => {
     res.send('<h1> Hello World </h1>');
 });
+// TODO: Security -- need these to be private
+app.use('/uploads', express_1.default.static(path_1.default.join(__dirname + 'uploads')));
 app.get('/protected', passport_1.default.authenticate('jwt', { session: false }), (req, res) => {
     res.send(req.user);
 });
