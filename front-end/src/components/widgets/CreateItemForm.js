@@ -277,31 +277,38 @@ const RegistrationForm = (props) => {
   }, []);
 
   const onFinish = (values) => {
-    console.log(values);
     let tempCharacteristics = {};
     values.characteristics.forEach((c) => {
       console.log(c.key);
       tempCharacteristics[CHARACTERISTICS[c.key]] = c.value;
     });
     values.characteristics = tempCharacteristics;
+
     let tempBioticDisturbances = {};
     values.bioticDisturbances.forEach((b) => {
       tempBioticDisturbances[BIOTIC_DISTURBANCES[b.key]] = b.value;
     });
     values.bioticDisturbances = tempBioticDisturbances;
+
+    let tempKeyIdFeatures = [];
+    values.keyIdFeatures.forEach((value) => {
+      // keyIdFeatures is of the form {value: "text representing good data"}
+      tempKeyIdFeatures.push(value.value);
+    });
+    values.keyIdFeatures = tempKeyIdFeatures;
+
     let formData = new FormData();
     images.forEach((image) => {
       formData.append('images', image.originFileObj);
     });
-    Object.keys(values).forEach((key) => {
-      formData.set(key, values[key]);
-    });
+
+    formData.set('data', JSON.stringify(values));
     if (navigator.geolocation) {
       navigator.permissions
         .query({ name: 'geolocation' })
         .then(function (result) {
           if (result.state === 'granted') {
-            formData.set('location', location);
+            formData.set('location', JSON.stringify(location));
             console.log(location);
           }
         });
@@ -316,7 +323,7 @@ const RegistrationForm = (props) => {
         }
       })
       .then((res) => console.log(res))
-      .catch((err) => console.log(err.toString()));
+      .catch((err) => console.log(err.response.data.errors));
   };
 
   return (
