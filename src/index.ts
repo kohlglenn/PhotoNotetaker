@@ -24,54 +24,54 @@ mongoose
 
 const app: Express = express();
 
-// app.use((req: Request, res: Response, next: NextFunction) => {
-//   console.log(req.headers);
-//   next();
-// });
-// Middleware
-app.use(bodyParser.json({ limit: '50mb' }));
-app.use(bodyParser.urlencoded({ limit: '50mb' }));
+// // app.use((req: Request, res: Response, next: NextFunction) => {
+// //   console.log(req.headers);
+// //   next();
+// // });
+// // Middleware
+// app.use(bodyParser.json({ limit: '50mb' }));
+// app.use(bodyParser.urlencoded({ limit: '50mb' }));
 
-app.use(passport.initialize());
-passport.use(
-  new JwtStrategy(
-    {
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: SESSION_SECRET
-    },
-    (jwt_payload, done) => {
-      User.findById(jwt_payload.id)
-        .then((user) => {
-          if (user) {
-            return done(null, user);
-          }
-          return done(null, false);
-        })
-        .catch((err) => console.log(err));
-    }
-  )
-);
+// app.use(passport.initialize());
+// passport.use(
+//   new JwtStrategy(
+//     {
+//       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+//       secretOrKey: SESSION_SECRET
+//     },
+//     (jwt_payload, done) => {
+//       User.findById(jwt_payload.id)
+//         .then((user) => {
+//           if (user) {
+//             return done(null, user);
+//           }
+//           return done(null, false);
+//         })
+//         .catch((err) => console.log(err));
+//     }
+//   )
+// );
 
-app.options('*', cors());
-app.use(cors());
+// app.options('*', cors());
+// app.use(cors());
 
 // define a route handler for the default home page
 app.get('/', (req: Request, res: Response) => {
   res.send('<h1> Hello World </h1>');
 });
 
-app.get(
-  '/protected',
-  passport.authenticate('jwt', { session: false }),
-  (req: Request, res: Response) => {
-    res.send(req.user);
-  }
-);
+// app.get(
+//   '/protected',
+//   passport.authenticate('jwt', { session: false }),
+//   (req: Request, res: Response) => {
+//     res.send(req.user);
+//   }
+// );
 
-// routes
-app.use('/api/users', users);
-app.use('/api/feed', feed);
-app.use('/api/create', create);
+// // routes
+// app.use('/api/users', users);
+// app.use('/api/feed', feed);
+// app.use('/api/create', create);
 
 // start the express server
 app.listen(port, () => {
