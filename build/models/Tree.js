@@ -27,7 +27,7 @@ __decorate([
     __metadata("design:type", Date)
 ], Image.prototype, "dateFound", void 0);
 __decorate([
-    typegoose_1.prop({ type: Number, default: VANCOUVER_LAT_LON }),
+    typegoose_1.prop({ default: VANCOUVER_LAT_LON }),
     __metadata("design:type", Array)
 ], Image.prototype, "location", void 0);
 exports.Image = Image;
@@ -89,25 +89,6 @@ __decorate([
     __metadata("design:type", String)
 ], BioticDisturbances.prototype, "managmentStrategy", void 0);
 exports.BioticDisturbances = BioticDisturbances;
-// export class TreeDocument {
-//   @prop({ unique: true, required: true })
-//   latinName!: string;
-//   @prop({ required: true })
-//   familyName!: string;
-//   @prop({ required: true })
-//   commonName!: string;
-//   @prop({ required: true, type: String })
-//   keyIdFeatures!: Array<string>;
-//   @prop({ required: true, ref: () => Characteristics })
-//   characteristics!: Ref<Characteristics>;
-//   @prop({ ref: () => Image })
-//   photos?: Ref<Image>[];
-//   @prop({ ref: () => BioticDisturbances })
-//   bioticDisturbances?: Ref<BioticDisturbances>;
-//   @prop()
-//   notes?: string;
-// }
-// Not sure if I like characteristics and biotic disturbances modeled in this way... They are weak entities so should be absorbed by the parent I think?
 class TreeDocument {
 }
 __decorate([
@@ -127,16 +108,16 @@ __decorate([
     __metadata("design:type", Array)
 ], TreeDocument.prototype, "keyIdFeatures", void 0);
 __decorate([
-    typegoose_1.prop({ required: true, type: Characteristics }),
-    __metadata("design:type", Characteristics)
+    typegoose_1.prop({ required: true, ref: () => Characteristics }),
+    __metadata("design:type", Object)
 ], TreeDocument.prototype, "characteristics", void 0);
 __decorate([
-    typegoose_1.prop({ type: Image }),
+    typegoose_1.prop({ ref: () => Image }),
     __metadata("design:type", Array)
 ], TreeDocument.prototype, "photos", void 0);
 __decorate([
-    typegoose_1.prop({ type: BioticDisturbances }),
-    __metadata("design:type", BioticDisturbances)
+    typegoose_1.prop({ ref: () => BioticDisturbances }),
+    __metadata("design:type", Object)
 ], TreeDocument.prototype, "bioticDisturbances", void 0);
 __decorate([
     typegoose_1.prop(),

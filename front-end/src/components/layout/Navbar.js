@@ -23,6 +23,7 @@ const Navbar = (props) => {
   };
 
   useEffect(() => {
+    console.log(auth);
     if (!auth.isAuthenticated) {
       history.push('/');
     }
