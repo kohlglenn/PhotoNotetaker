@@ -10,7 +10,7 @@ export class Image {
   @prop({ default: new Date() })
   dateFound?: Date = new Date();
 
-  @prop({ default: VANCOUVER_LAT_LON })
+  @prop({ type: Number, default: VANCOUVER_LAT_LON })
   location?: [number, number] = VANCOUVER_LAT_LON;
 }
 
@@ -57,6 +57,33 @@ export class BioticDisturbances {
   managmentStrategy?: string;
 }
 
+// export class TreeDocument {
+//   @prop({ unique: true, required: true })
+//   latinName!: string;
+
+//   @prop({ required: true })
+//   familyName!: string;
+
+//   @prop({ required: true })
+//   commonName!: string;
+
+//   @prop({ required: true, type: String })
+//   keyIdFeatures!: Array<string>;
+
+//   @prop({ required: true, ref: () => Characteristics })
+//   characteristics!: Ref<Characteristics>;
+
+//   @prop({ ref: () => Image })
+//   photos?: Ref<Image>[];
+
+//   @prop({ ref: () => BioticDisturbances })
+//   bioticDisturbances?: Ref<BioticDisturbances>;
+
+//   @prop()
+//   notes?: string;
+// }
+
+// Not sure if I like characteristics and biotic disturbances modeled in this way... They are weak entities so should be absorbed by the parent I think?
 export class TreeDocument {
   @prop({ unique: true, required: true })
   latinName!: string;
@@ -70,14 +97,14 @@ export class TreeDocument {
   @prop({ required: true, type: String })
   keyIdFeatures!: Array<string>;
 
-  @prop({ required: true, ref: () => Characteristics })
-  characteristics!: Ref<Characteristics>;
+  @prop({ required: true, type: Characteristics })
+  characteristics!: Characteristics;
 
-  @prop({ ref: () => Image })
-  photos?: Ref<Image>[];
+  @prop({ type: Image })
+  photos?: Image[];
 
-  @prop({ ref: () => BioticDisturbances })
-  bioticDisturbances?: Ref<BioticDisturbances>;
+  @prop({ type: BioticDisturbances })
+  bioticDisturbances?: BioticDisturbances;
 
   @prop()
   notes?: string;

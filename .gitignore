@@ -113,7 +113,3 @@ front-end/build
 uploads/*
 !uploads/tmp/
 uploads/tmp/*
-# Elastic Beanstalk Files
-.elasticbeanstalk/*
-!.elasticbeanstalk/*.cfg.yml
-!.elasticbeanstalk/*.global.yml
