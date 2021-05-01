@@ -1,10 +1,12 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const dotenv_1 = __importDefault(require("dotenv"));
-const express_1 = __importDefault(require("express"));
+'use strict';
+var __importDefault =
+  (this && this.__importDefault) ||
+  function (mod) {
+    return mod && mod.__esModule ? mod : { default: mod };
+  };
+Object.defineProperty(exports, '__esModule', { value: true });
+const dotenv_1 = __importDefault(require('dotenv'));
+const express_1 = __importDefault(require('express'));
 // import bodyParser from 'body-parser';
 // import mongoose from 'mongoose';
 // import passport from 'passport';
@@ -18,6 +20,8 @@ const express_1 = __importDefault(require("express"));
 // initialize configuration
 dotenv_1.default.config();
 const port = process.env.PORT;
+// // :)
+
 // Connect to MongoDB
 // mongoose
 //   .connect(MONGODB_URI as string, { useNewUrlParser: true })
@@ -54,7 +58,7 @@ const app = express_1.default();
 // app.use(cors());
 // define a route handler for the default home page
 app.get('/', (req, res) => {
-    res.send('<h1> Hello World </h1>');
+  res.send('<h1> Hello World </h1>');
 });
 // app.get(
 //   '/protected',
@@ -69,5 +73,5 @@ app.get('/', (req, res) => {
 // app.use('/api/create', create);
 // start the express server
 app.listen(port, () => {
-    console.log(`server started at http://localhost:${port}`);
+  console.log(`server started at http://localhost:${port}`);
 });
