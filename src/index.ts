@@ -1,26 +1,26 @@
 import dotenv from 'dotenv';
 import express, { Express, Request, Response, NextFunction } from 'express';
-import bodyParser from 'body-parser';
-import mongoose from 'mongoose';
-import passport from 'passport';
-import { MONGODB_URI, SESSION_SECRET } from './util/secrets';
-import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
-import { User, UserDocument } from './models/User';
-const cors = require('cors');
+// import bodyParser from 'body-parser';
+// import mongoose from 'mongoose';
+// import passport from 'passport';
+// import { MONGODB_URI, SESSION_SECRET } from './util/secrets';
+// import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
+// import { User, UserDocument } from './models/User';
+// const cors = require('cors');
 
-import users from './routes/api/users';
-import feed from './routes/api/feed';
-import create from './routes/api/create';
+// import users from './routes/api/users';
+// import feed from './routes/api/feed';
+// import create from './routes/api/create';
 
 // initialize configuration
 dotenv.config();
 const port = process.env.PORT;
 
 // Connect to MongoDB
-mongoose
-  .connect(MONGODB_URI as string, { useNewUrlParser: true })
-  .then(() => console.log('MongoDB successfully connected'))
-  .catch((err) => console.log(err));
+// mongoose
+//   .connect(MONGODB_URI as string, { useNewUrlParser: true })
+//   .then(() => console.log('MongoDB successfully connected'))
+//   .catch((err) => console.log(err));
 
 const app: Express = express();
 

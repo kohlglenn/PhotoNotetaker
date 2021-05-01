@@ -5,17 +5,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = __importDefault(require("dotenv"));
 const express_1 = __importDefault(require("express"));
-const mongoose_1 = __importDefault(require("mongoose"));
-const secrets_1 = require("./util/secrets");
-const cors = require('cors');
+// import bodyParser from 'body-parser';
+// import mongoose from 'mongoose';
+// import passport from 'passport';
+// import { MONGODB_URI, SESSION_SECRET } from './util/secrets';
+// import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
+// import { User, UserDocument } from './models/User';
+// const cors = require('cors');
+// import users from './routes/api/users';
+// import feed from './routes/api/feed';
+// import create from './routes/api/create';
 // initialize configuration
 dotenv_1.default.config();
 const port = process.env.PORT;
 // Connect to MongoDB
-mongoose_1.default
-    .connect(secrets_1.MONGODB_URI, { useNewUrlParser: true })
-    .then(() => console.log('MongoDB successfully connected'))
-    .catch((err) => console.log(err));
+// mongoose
+//   .connect(MONGODB_URI as string, { useNewUrlParser: true })
+//   .then(() => console.log('MongoDB successfully connected'))
+//   .catch((err) => console.log(err));
 const app = express_1.default();
 // // app.use((req: Request, res: Response, next: NextFunction) => {
 // //   console.log(req.headers);
