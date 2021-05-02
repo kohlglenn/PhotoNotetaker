@@ -22,6 +22,7 @@ import axios from 'axios';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
 import { registerUser } from '../../actions/authActions';
+import GoogleMap from './GoogleMap';
 
 const { Option } = Select;
 
@@ -272,7 +273,7 @@ const RegistrationForm = (props) => {
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(({ coords }) => {
-      setLocation(coords);
+      setLocation({ lat: coords.latitude, lng: coords.longitude });
     });
   }, []);
 
@@ -375,6 +376,15 @@ const RegistrationForm = (props) => {
 
       <Form.Item name="notes" label="Notes">
         <Input.TextArea autoSize={{ minRows: 2 }} />
+      </Form.Item>
+
+      <Form.Item name="map" label="Locations">
+        <GoogleMap
+          zoom={15}
+          center={location}
+          setLatLng={setLocation}
+          draggable
+        />
       </Form.Item>
 
       <Form.Item {...tailFormItemLayout}>

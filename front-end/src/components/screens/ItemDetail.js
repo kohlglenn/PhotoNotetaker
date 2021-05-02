@@ -5,11 +5,22 @@ import { Spin, Card, Carousel, List, Typography } from 'antd';
 import PropTypes from 'prop-types';
 
 import Navbar from '../layout/Navbar';
+import GoogleMap from '../widgets/GoogleMap';
 
 const { Item } = List;
 
 function ItemDetailCard(props) {
   const { data } = props;
+  const [locations, setLocations] = React.useState([]);
+
+  useEffect(() => {
+    setLocations(
+      data.photos.map((photo) => {
+        return { lat: photo.location[0], lng: photo.location[1] };
+      })
+    );
+  }, []);
+
   const styles = {
     base: {
       fontFamily: 'Arial'
@@ -148,6 +159,14 @@ function ItemDetailCard(props) {
             <span style={{ ...styles.base, ...styles.normalText }}>
               {data.notes}
             </span>
+          </Item>
+        ) : null}
+        <Item>
+          <span style={{ ...styles.base, ...styles.notes }}>Locations</span>
+        </Item>
+        {locations ? (
+          <Item>
+            <GoogleMap zoom={15} center={locations[0]} draggable={false} />
           </Item>
         ) : null}
       </List>
