@@ -104,7 +104,7 @@ dist
 .tern-port
 
 # Built Typescript js files
-build/
+/build/
 
 # Built react files
 front-end/build
