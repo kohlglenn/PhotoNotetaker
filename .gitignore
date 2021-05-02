@@ -103,8 +103,8 @@ dist
 # TernJS port file
 .tern-port
 
-# Built Typescript js files
-/build/
+# Built Typescript js file
+build/
 
 # Built react files
 front-end/build
