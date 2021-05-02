@@ -1,0 +1,16 @@
+//buildspec.yml
+version: 0.2
+phases:
+    install:
+        commands:
+            - 'npm install'
+    build:
+        commands:
+            - 'npm run build'
+artifacts:
+    type: zip
+    files:
+        - package.json
+        - package-lock.json
+        - 'build/**/*'
+        - README.md

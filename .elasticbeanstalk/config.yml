@@ -3,7 +3,7 @@ branch-defaults:
     environment: null
     group_suffix: null
   test:
-    environment: Wikitreedia-env
+    environment: wikitreedia-env-test
 environment-defaults:
   Wikitreedia-env:
     branch: null
